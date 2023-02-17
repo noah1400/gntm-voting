@@ -20,8 +20,8 @@ return new class extends Migration
                                                         // if type is 'increase' then this is the activity_id of the activity to increase
             $table->timestamps();
 
-            $table->foreignId('model_id')->constrained('top_models')->cascadeOnDelete();
-            $table->foreignId('activity_id')->constrained('activities')->cascadeOnDelete();
+            $table->foreignId('model_id')->nullable()->constrained('top_models')->cascadeOnDelete();
+            $table->foreignId('activity_id')->nullable()->constrained('activities')->cascadeOnDelete();
         });
     }
 
