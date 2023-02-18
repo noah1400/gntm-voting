@@ -12,7 +12,7 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-              <tr v-for="m in dict" :key="m.model" class="divide-x divide-gray-200">
+              <tr v-for="m in dict" :key="m.id" class="divide-x divide-gray-200">
                 <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ m.model }}</td>
                 <td v-for="a in m.activities" :key="a.activity" class="whitespace-nowrap p-4 text-sm text-gray-500">
                     {{ a.count }}
@@ -68,15 +68,19 @@ export default {
     },
     methods: {
         update() {
-            //stats
+            
+          console.log(this.stats)
+
             this.dict = [];
             this.act = [];
+            var id_m = 0;
             for (const [key, value] of Object.entries(this.stats)) {
                 let model = key;
                 let stats = value;
                 let activities = [];
                 for (const [key, value] of Object.entries(stats)) {
                     let episode = value;
+                    var id_a = 0;
                     for (const [name, activity] of Object.entries(episode)) {
                         if (!this.act.includes(name)) {
                             this.act.push(name);
@@ -84,6 +88,7 @@ export default {
                         let count = activity.count;
                         let mult = activity.multiplier;
                         activities.push({
+                            id: id_a++,
                             activity: name,
                             count: count,
                             multiplier: mult
@@ -91,10 +96,14 @@ export default {
                     }
                 }
                 this.dict.push({
+                    id: id_m++,
                     model: model,
                     activities: activities
                 });
             }
+
+            console.log(this.dict)
+
             // points means: sum of count * multiplier for each activity of each model
             this.points = {};
             for (const [key, value] of Object.entries(this.stats)) {
