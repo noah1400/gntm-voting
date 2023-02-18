@@ -87,7 +87,7 @@
                                                 <div class="flex flex-col">
                                                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span
                                                         class="sr-only">, {{ model.name }}</span></a>
-                                                    <a @click="deleteModel(model)" class="text-indigo-600 hover:text-indigo-900">Delete<span
+                                                    <a @click="deleteModel(model)" class="text-red-600 hover:text-red-600 cursor-pointer">Delete<span
                                                         class="sr-only">, {{ model.name }}</span></a>
                                                 </div>
                                                 
