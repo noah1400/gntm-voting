@@ -56,6 +56,27 @@ class TopModelController extends Controller
         return response()->json($model);
     }
 
+    public function deleteModel($id)
+    {
+        $model = TopModel::find($id);
+        if ($model == null) {
+            return response()->json(['error' => 'Model not found'], 404);
+        }
+
+        DB::transaction(function () use ($model) {
+            $model->activities()->detach();
+            //$model->episodes()->detach();
+
+            $photo = $model->image;
+            $model->delete();
+            if ($photo != null && file_exists(storage_path('app/public/' . $photo))) {
+                unlink(storage_path('app/public/' . $photo));
+            }
+
+
+        }, 5);
+    }
+
     public function getModelsActivities($id)
     {
         $models = TopModel::find($id);
@@ -71,38 +92,42 @@ class TopModelController extends Controller
             return response()->json(['error' => 'Episode id not found'], 404);
         }
 
-        $model = TopModel::find($m_id);
-        $activity = Activity::find($t_id);
+        $model = null;
 
-        if ($model == null || $activity == null) {
-            return response()->json(['error' => 'Model or activity not found'], 404);
-        }
+        DB::transaction(function () use ($m_id, $t_id, $episode_id, $model) {
+            $model = TopModel::find($m_id);
+            $activity = Activity::find($t_id);
 
-        // if model participated in this activity in this episode
-        $participates = DB::table('top_model_activity')
-            ->where('model_id', $model->id)
-            ->where('activity_id', $activity->id)
-            ->where('episode_id', $episode_id)
-            ->exists();
+            if ($model == null || $activity == null) {
+                return response()->json(['error' => 'Model or activity not found'], 404);
+            }
 
-        if (!$participates) {
-            // attach model to activity
-            $model->activities()->attach($activity->id, ['count' => 1, 'episode_id' => $episode_id]);
-        } else {
-            // increment count
-            DB::table('top_model_activity')
+            // if model participated in this activity in this episode
+            $participates = DB::table('top_model_activity')
                 ->where('model_id', $model->id)
                 ->where('activity_id', $activity->id)
                 ->where('episode_id', $episode_id)
-                ->increment('count');
-        }
+                ->exists();
 
-        Lastcall::set([
-            'type' => 'incr',
-            'affected' => 'model_activity',
-            'model_id' => $model->id,
-            'activity_id' => $activity->id,
-        ]);
+            if (!$participates) {
+                // attach model to activity
+                $model->activities()->attach($activity->id, ['count' => 1, 'episode_id' => $episode_id]);
+            } else {
+                // increment count
+                DB::table('top_model_activity')
+                    ->where('model_id', $model->id)
+                    ->where('activity_id', $activity->id)
+                    ->where('episode_id', $episode_id)
+                    ->increment('count');
+            }
+
+            Lastcall::set([
+                'type' => 'incr',
+                'affected' => 'model_activity',
+                'model_id' => $model->id,
+                'activity_id' => $activity->id,
+            ]);
+        }, 5);
 
         return response()->json($model);
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Lastcall extends Model
 {
@@ -82,29 +83,33 @@ class Lastcall extends Model
         if (static::lastcall() == null) {
             return false;
         }
-        if (static::lastcall()->type == 'create') {
-            if (static::lastcall()->affected == 'model') {
+        DB::transaction(function () {
+            if (static::lastcall()->type == 'create') {
+                if (static::lastcall()->affected == 'model') {
+                    $model = static::lastcall()->model;
+                    $model->delete();
+                } else if (static::lastcall()->affected == 'activity') {
+                    $activity = static::lastcall()->activity;
+                    $activity->delete();
+                }
+            } else if (in_array(static::lastcall()->type, ['increase', 'incr']) ) {
                 $model = static::lastcall()->model;
-                $model->delete();
-            } else if (static::lastcall()->affected == 'activity') {
                 $activity = static::lastcall()->activity;
-                $activity->delete();
+                // decrease count in pivot table
+                $act = $model->activities->find($activity);
+                // if count is 1 then detach
+                if ($act->pivot->count == 1) {
+                    $model->activities()->detach($activity);
+                } else {
+                    $model->activities()->updateExistingPivot($activity, ['count' => $act->pivot->count - 1]);
+                }
             }
-        } else if (in_array(static::lastcall()->type, ['increase', 'incr']) ) {
-            $model = static::lastcall()->model;
-            $activity = static::lastcall()->activity;
-            // decrease count in pivot table
-            $act = $model->activities->find($activity);
-            // if count is 1 then detach
-            if ($act->pivot->count == 1) {
-                $model->activities()->detach($activity);
-            } else {
-                $model->activities()->updateExistingPivot($activity, ['count' => $act->pivot->count - 1]);
-            }
-        }
-        // remove lastcall
-        static::lastcall()->delete();
-        static::$lastcall = null;
+            // remove lastcall
+            static::lastcall()->delete();
+            static::$lastcall = null;
+        }, 5);
+
+        
 
         return true;
     }

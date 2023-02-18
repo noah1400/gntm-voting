@@ -41,6 +41,7 @@ Route::middleware(['logged_in'])->group(function () {
 
     Route::get('/api/models', [App\Http\Controllers\TopModelController::class, 'getModels']);
     Route::post('/api/models', [App\Http\Controllers\TopModelController::class, 'createModel']);
+    Route::delete('/api/models/{id}', [App\Http\Controllers\TopModelController::class, 'deleteModel']);
 
     Route::get('/api/activities', [App\Http\Controllers\ActivityController::class, 'getActivities']);
     Route::get('/api/activity/{id}', [App\Http\Controllers\ActivityController::class, 'getActivity']);
@@ -72,11 +73,12 @@ Route::middleware(['logged_in'])->group(function () {
 
 
 Route::get('/debug', function () {
-    $participates = DB::table('top_model_activity')
-        ->where('model_id', 1)
-        ->where('activity_id', 1)
-        ->where('episode_id', 2)->value('count');
-    dd($participates);
+
+    // check if debug is enabled
+    if (config('app.debug') == false) {
+        abort(404);
+    }
+    dd(storage_path('app/public/models/'));
     return;
 });
 

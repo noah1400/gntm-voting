@@ -84,8 +84,13 @@
                                             }}</td>
                                             <td
                                                 class="relative whitespace-nowrap py-4 pl-3 pr-6 text-right text-sm font-medium sm:pr-0">
-                                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span
+                                                <div class="flex flex-col">
+                                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span
                                                         class="sr-only">, {{ model.name }}</span></a>
+                                                    <a @click="deleteModel(model)" class="text-indigo-600 hover:text-indigo-900">Delete<span
+                                                        class="sr-only">, {{ model.name }}</span></a>
+                                                </div>
+                                                
                                             </td>
                                         </tr>
                                     </tbody>
@@ -304,6 +309,15 @@ export default {
             setTimeout(() => {
                 this.modelAdded = false;
             }, 3000);
+        },
+        deleteModel(model) {
+            axios.delete('/api/models/' + model.id)
+                .then(response => {
+                    this.models = this.models.filter(m => m.id !== model.id);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         getModels() {
             axios.get('/api/models')
