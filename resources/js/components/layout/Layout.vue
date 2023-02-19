@@ -62,7 +62,8 @@
             </div>
         </div>
     </nav>
-    <component :is="component" v-if="selected_episode || component.name == 'Settings'"></component>
+    <component :is="component" v-if="selected_episode || component.name == 'Settings'
+    || component.name == 'Stats'"></component>
     <div v-if="!selected_episode && component.name != 'Settings'">
         <div class="flex items-center justify-center h-screen">
             Bitte wähle eine Episode aus oder erstelle eine neue.

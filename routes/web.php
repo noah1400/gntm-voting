@@ -39,18 +39,19 @@ Route::middleware(['logged_in'])->group(function () {
     })->name('settings');
 
 
-    Route::get('/api/models', [App\Http\Controllers\TopModelController::class, 'getModels']);
+    
     Route::post('/api/models', [App\Http\Controllers\TopModelController::class, 'createModel']);
     Route::delete('/api/models/{id}', [App\Http\Controllers\TopModelController::class, 'deleteModel']);
 
-    Route::get('/api/activities', [App\Http\Controllers\ActivityController::class, 'getActivities']);
+    
     Route::get('/api/activity/{id}', [App\Http\Controllers\ActivityController::class, 'getActivity']);
     Route::post('/api/activity', [App\Http\Controllers\ActivityController::class, 'createActivity']);
     Route::get('/api/models/activities/{id}', [App\Http\Controllers\TopModelController::class, 'getModelsActivities']);
     Route::post('/api/models/{m_id}/incr/{a_id}', [App\Http\Controllers\TopModelController::class, 'incrModelActivity']);
 
-    Route::get('/api/episodes', [App\Http\Controllers\EpisodeController::class, 'getEpisodes']);
+    
     Route::post('/api/episode', [App\Http\Controllers\EpisodeController::class, 'createEpisode']);
+    Route::delete('/api/episode/{id}', [App\Http\Controllers\EpisodeController::class, 'deleteEpisode']);
     Route::get('/api/models/episodes/{id}', [App\Http\Controllers\TopModelController::class, 'getModelsEpisodes']);
     Route::post('/api/models/{m_id}/episode/{e_id}', [App\Http\Controllers\TopModelController::class, 'addModelEpisode']);
 
@@ -60,16 +61,16 @@ Route::middleware(['logged_in'])->group(function () {
     Route::get('/api/episode/{id}', [App\Http\Controllers\EpisodeController::class, 'getEpisode']);
 
 
-    Route::get('/api/stats', [App\Http\Controllers\TopModelController::class, 'getModelsStats']);
+    
 
     Route::post('/api/lastcall/revoke', [App\Http\Controllers\LastcallController::class, 'revoke']);
     Route::get('/api/lastcall', [App\Http\Controllers\LastcallController::class, 'get']);
 });
 
-
-
-
-
+Route::get('/api/stats', [App\Http\Controllers\TopModelController::class, 'getModelsStats']);
+Route::get('/api/activities', [App\Http\Controllers\ActivityController::class, 'getActivities']);
+Route::get('/api/episodes', [App\Http\Controllers\EpisodeController::class, 'getEpisodes']);
+Route::get('/api/models', [App\Http\Controllers\TopModelController::class, 'getModels']);
 
 
 Route::get('/debug', function () {

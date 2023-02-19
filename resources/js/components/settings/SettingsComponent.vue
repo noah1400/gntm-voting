@@ -243,8 +243,11 @@
                                             }}</td>
                                             <td
                                                 class="relative whitespace-nowrap py-4 pl-3 pr-6 text-right text-sm font-medium sm:pr-0">
+                                                <div class="flex flex-col">
                                                 <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span
                                                         class="sr-only">, {{ episode.number }}</span></a>
+                                                        <a @click="deleteEpisode(episode.id)" class="text-red-600 hover:text-red-900">Delete</a>
+                                                    </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -381,6 +384,15 @@ export default {
             setTimeout(() => {
                 this.episodeAdded = false;
             }, 3000);
+        },
+        deleteEpisode(episode) {
+            axios.delete('/api/episode/' + episode)
+                .then(response => {
+                    this.episodes = this.episodes.filter(e => e.id !== episode);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         openFileBrowser() {
             document.getElementById('photo').click();

@@ -41,7 +41,7 @@
 <script>
 import GraphComponent from './GraphComponent.vue';
 export default {
-    name : 'StatsComponent',
+    name : 'Stats',
     components: {
         GraphComponent
     },

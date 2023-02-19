@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Episode;
+use Illuminate\Support\Facades\DB;
 
 class EpisodeController extends Controller
 {
@@ -62,5 +63,16 @@ class EpisodeController extends Controller
         }
         $request->session()->put('selected_episode', $id);
         return response()->json($id);
+    }
+
+    public function deleteEpisode($id) {
+        $episode = Episode::find($id);
+        if ($episode == null) {
+            return response()->json(['error' => 'Episode not found'], 404);
+        }
+        DB::transaction(function () use ($episode) {
+            $episode->activities()->detach();
+            $episode->delete();
+        });
     }
 }
