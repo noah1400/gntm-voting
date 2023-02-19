@@ -140,8 +140,10 @@ export default {
             })
         },
         selectEpisode() {
-            consoloe.log(this.selectEpisode)
+            console.log(this.selected_episode)
             let i = this.episodes.find(episode => episode.number == this.selected_episode).id
+            console.log(i)
+            console.log(this.episodes)
             let vm = this;
             axios.post('/api/episode/select/' + i)
                 .then(response => {
