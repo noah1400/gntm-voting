@@ -125,13 +125,16 @@ export default {
     methods: {
         getEpisodes() {
             axios.get('/api/episodes').then(response => {
+                console.log(response.data)
                 this.episodes = response.data
             })
             this.getSelectedEpisode();
         },
         getSelectedEpisode() {
             axios.get('/api/episode/selected').then(response => {
+                console.log("selected episode: ")
                 console.log(response.data)
+                console.log("end selected episode")
                 var e = this.episodes.find(episode => episode.id == response.data.id)
                 this.selected_episode = e ? e.number : this.episodes[0].number;
                 if (!e) {

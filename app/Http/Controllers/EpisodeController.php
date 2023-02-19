@@ -70,6 +70,11 @@ class EpisodeController extends Controller
         if ($episode == null) {
             return response()->json(['error' => 'Episode not found'], 404);
         }
+
+        if ($episode->id == request()->session()->get('selected_episode')) {
+            request()->session()->forget('selected_episode');
+        }
+
         DB::transaction(function () use ($episode) {
             $episode->activities()->detach();
             $episode->delete();
