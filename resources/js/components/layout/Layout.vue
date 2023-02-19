@@ -131,6 +131,7 @@ export default {
         },
         getSelectedEpisode() {
             axios.get('/api/episode/selected').then(response => {
+                console.log(response.data)
                 var e = this.episodes.find(episode => episode.id == response.data.id)
                 this.selected_episode = e ? e.number : this.episodes[0].number;
                 if (!e) {
@@ -139,10 +140,12 @@ export default {
             })
         },
         selectEpisode() {
+            consoloe.log(this.selectEpisode)
             let i = this.episodes.find(episode => episode.number == this.selected_episode).id
             let vm = this;
             axios.post('/api/episode/select/' + i)
                 .then(response => {
+                    console.log(response.data)
                     this.selected_episode = this.episodes.find(episode => episode.id == response.data).number;
                 })
         },
