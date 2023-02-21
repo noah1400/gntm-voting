@@ -51,9 +51,8 @@ class EpisodeController extends Controller
         }
         $episode = Episode::find($request->session()->get('selected_episode'));
         if ($episode == null) {
-            $episode = Episode::first();
-            $request->session()->put('selected_episode', $episode->id);
-            return response()->json($episode);
+            $request->session()->forget('selected_episode');
+            return response()->json(null);
         }
         return response()->json($episode);
 
@@ -61,7 +60,7 @@ class EpisodeController extends Controller
 
     public function selectEpisode(Request $request, $id) {
         if (Episode::find($id) == null) {
-            return response()->json(['error' => 'Episode not found'], 404);
+            return response()->json(null);
         }
         $request->session()->put('selected_episode', $id);
         return response()->json($id);
