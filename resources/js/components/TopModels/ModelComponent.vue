@@ -15,9 +15,10 @@
                 </div>
                 <ul role="list"
                     class="mx-auto grid grid-cols-2 gap-x-3 gap-y-7 sm:grid-cols-3 md:gap-x-5 lg:max-w-5xl lg:gap-x-7 lg:gap-y-11 xl:grid-cols-5">
-                    <li v-for="model in models" :key="model.name" @click="modelClicked(model.id)">
+                    <li v-for="model in models" :key="model.name">
                         <div class="space-y-4">
-                            <img class="mx-auto h-32 w-32 rounded-full lg:h-36 lg:w-36 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
+                            <img @click="modelClicked(model.id)"
+                                class="mx-auto h-32 w-32 rounded-full lg:h-36 lg:w-36 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
                                 :src="'storage/' + model.image" alt="" />
                             <div class="space-y-2">
                                 <div class="text-lg font-medium lg:text-xl">
