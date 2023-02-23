@@ -39,15 +39,12 @@ export default {
     },
     watch: {
         'sA': function (val, oldVal) {
-            console.log('sA changed')
             this.update()
         },
         'sM': function (val, oldVal) {
-            console.log('sM changed')
             this.update()
         },
         'sE': function (val, oldVal) {
-            console.log('sE changed')
             this.update();
         }
     },
