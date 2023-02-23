@@ -120,7 +120,10 @@ export default {
                 }
                 this.points[model] = points;
             }
-            console.log(this.points);
+            // sort points by value (descending)
+            this.points = Object.fromEntries(
+                Object.entries(this.points).sort(([,a],[,b]) => b-a)
+            );
         }
     }
 }
