@@ -73,6 +73,22 @@ Route::get('/api/episodes', [App\Http\Controllers\EpisodeController::class, 'get
 Route::get('/api/models', [App\Http\Controllers\TopModelController::class, 'getModels']);
 
 
+Route::get('/model/{slug}', function ($slug) {
+    $model = TopModel::where('slug', $slug)->first();
+    $act = $model->activities;
+    $ep = $model->episodes();
+
+    if ($model == null) {
+        abort(404);
+    }
+    return view('models.show', compact('model'));
+})->name('model');
+
+Route::get('/models', function () {
+    $models = TopModel::all();
+    return view('models.index', compact('models'));
+})->name('models');
+
 Route::get('/debug', function () {
 
     // check if debug is enabled
