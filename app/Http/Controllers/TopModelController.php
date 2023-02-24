@@ -9,6 +9,7 @@ use App\Models\Episode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Str;
 
 class TopModelController extends Controller
 {
@@ -28,6 +29,8 @@ class TopModelController extends Controller
         ]);
 
         $model = new TopModel();
+
+        $model->slug = Str::slug($request->name, '-');
 
         if (request()->has('photo')) {
             $url = request()->file('photo')->store('public/models');
