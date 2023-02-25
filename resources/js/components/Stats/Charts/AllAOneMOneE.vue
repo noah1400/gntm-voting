@@ -66,32 +66,6 @@ export default {
                 }
             }
 
-            // create chart
-            // labels: activity names
-            // values: count
-            // var chart = new JSC.Chart('chartDiv', {
-            //     legend_visible: false,
-            //     type: 'pie',
-            //     defaultSeries: { type: 'pie', pointSelection: true },
-            //     defaultPoint_label: {
-            //         text: '<b>%name</b>',
-            //         placement: 'auto',
-            //         autoHide: false,
-            //     },
-            //     defaultSeries: {
-            //         defaultPoint: {
-            //             labels: [{
-            //                 position: 'inside',
-            //                 text: '%yValue'
-            //             }]
-            //         }
-            //     },
-            //     series: [{
-            //         name: 'Aktivitäten',
-            //         points: points
-            //     }]
-            // });
-
         }
     }
 }

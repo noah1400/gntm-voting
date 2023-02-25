@@ -42,7 +42,6 @@ export default {
     },
     watch: {
         'stats': function (val, oldVal) {
-            console.log('stats changed')
             this.update()
         }
     },
