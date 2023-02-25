@@ -7,7 +7,9 @@
               <tr class="divide-x divide-gray-200">
                 <th scope="col" class="py-3.5 pl-6 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-0">Episode</th>
                 <th v-for="m in models" :key="m" scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <a :href="'/model/' + slugs[m]" class="text-indigo-600 hover:text-indigo-900">    
                     {{ m }}
+                  </a>
                 </th>
               </tr>
             </thead>
@@ -32,6 +34,10 @@ export default {
             type: Object,
             required: true
         },
+        slugs: {
+            type: Object,
+            required: true
+        }
     },
     data() {
         return {
@@ -72,7 +78,6 @@ export default {
                     models: models
                 }
             });
-            console.log(this.episodes);
         }
     }
 }

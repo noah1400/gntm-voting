@@ -71,6 +71,7 @@ Route::get('/api/stats', [App\Http\Controllers\TopModelController::class, 'getMo
 Route::get('/api/activities', [App\Http\Controllers\ActivityController::class, 'getActivities']);
 Route::get('/api/episodes', [App\Http\Controllers\EpisodeController::class, 'getEpisodes']);
 Route::get('/api/models', [App\Http\Controllers\TopModelController::class, 'getModels']);
+Route::get('/api/models/slugs', [App\Http\Controllers\TopModelController::class, 'getModelSlugs']);
 
 
 Route::get('/model/{slug}', function ($slug) {

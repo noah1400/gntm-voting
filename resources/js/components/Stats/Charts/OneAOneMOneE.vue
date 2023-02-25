@@ -5,8 +5,6 @@
           <table class="min-w-full divide-y divide-gray-300">
             <thead>
               <tr class="divide-x divide-gray-200">
-                <th scope="col" class="py-3.5 pl-6 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-0">Model</th>
-                <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Aktivität</th>
                 <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Anzahl</th>
                 <th scope="col" class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900">Multiplier</th>
                 <th scope="col" class="py-3.5 pl-4 pr-6 text-left text-sm font-semibold text-gray-900 sm:pr-0">Punktzahl</th>
@@ -14,8 +12,6 @@
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
               <tr class="divide-x divide-gray-200">
-                <td class="whitespace-nowrap py-4 pl-6 pr-4 text-sm font-medium text-gray-900 sm:pl-0">{{ model }}</td>
-                <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ activity }}</td>
                 <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ count }}</td>
                 <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ multiplier }}</td>
                 <td class="whitespace-nowrap py-4 pl-4 pr-6 text-sm text-gray-500 sm:pr-0">{{ count*multiplier }}</td>

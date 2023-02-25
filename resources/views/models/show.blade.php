@@ -2,6 +2,6 @@
 
 @section('content')
 <div>
-    <pre>{{$model->name}}</pre>
+    <pre>{{$model}}</pre>
 </div>
 @endsection

@@ -213,4 +213,14 @@ class TopModelController extends Controller
         }
         return response()->json($model);
     }
+
+    public function getModelSlugs()
+    {
+        $models = TopModel::all();
+        $slugs = [];
+        foreach ($models as $model) {
+            $slugs[$model->name] = $model->slug;
+        }
+        return response()->json($slugs);
+    }
 }

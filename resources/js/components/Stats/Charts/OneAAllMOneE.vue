@@ -14,7 +14,11 @@
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
               <tr v-for="m in series" :key="m.x" class="divide-x divide-gray-200">
-                <td class="whitespace-nowrap py-4 pl-6 pr-4 text-sm font-medium text-gray-900 sm:pl-0">{{ m.x }}</td>
+                <td class="whitespace-nowrap py-4 pl-6 pr-4 text-sm font-medium text-gray-900 sm:pl-0">
+                  <a :href="'/model/' + slugs[m.x]" class="text-indigo-600 hover:text-indigo-900">  
+                  {{ m.x }}
+                  </a>
+                </td>
                 <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ m.y }}</td>
                 <td class="whitespace-nowrap p-4 text-sm text-gray-500">{{ multiplier }}</td>
                 <td class="whitespace-nowrap py-4 pl-4 pr-6 text-sm text-gray-500 sm:pr-0">{{ m.y*multiplier }}</td>
@@ -38,6 +42,10 @@ export default {
             type: Object,
             required: true
         },
+        slugs: {
+            type: Object,
+            required: true
+        }
     },
     data() {
         return {

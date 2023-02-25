@@ -1,5 +1,5 @@
 <template>
-    <component :is="comp" :stats="stats"></component>
+    <component :is="comp" :stats="stats" :slugs="slugs"></component>
 </template>
 
 <script>
@@ -35,6 +35,10 @@ export default {
         sE: {
             type: Number,
             required: false
+        },
+        slugs: {
+            type: Object,
+            required: true
         }
     },
     watch: {

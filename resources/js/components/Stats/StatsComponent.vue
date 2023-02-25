@@ -33,7 +33,7 @@
             </div>
         </div>
     <div id="stats">
-        <graph-component :stats="stats" :sA="selectedActivityId" :sM="selectedModelId" :sE="selectedEpisodeId"></graph-component>
+        <graph-component :slugs="slugs" :stats="stats" :sA="selectedActivityId" :sM="selectedModelId" :sE="selectedEpisodeId"></graph-component>
     </div>
     </div>
 </template>
@@ -56,7 +56,7 @@ export default {
             selectedActivityId: -1,
             selectedEpisode: null,
             selectedEpisodeId: -1,
-
+            slugs: {},
             stats: {},
         }
     },
@@ -64,6 +64,7 @@ export default {
         this.getModels();
         this.getActivities();
         this.getEpisodes();
+        this.getSlugs();
     },
     methods: {
         getModels() {
@@ -129,6 +130,15 @@ export default {
             })
                 .then(response => {
                     this.stats = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        getSlugs() {
+            axios.get('/api/models/slugs')
+                .then(response => {
+                    this.slugs = response.data
                 })
                 .catch(error => {
                     console.log(error)
