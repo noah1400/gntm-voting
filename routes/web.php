@@ -39,17 +39,17 @@ Route::middleware(['logged_in'])->group(function () {
     })->name('settings');
 
 
-    
+
     Route::post('/api/models', [App\Http\Controllers\TopModelController::class, 'createModel']);
     Route::delete('/api/models/{id}', [App\Http\Controllers\TopModelController::class, 'deleteModel']);
 
-    
+
     Route::get('/api/activity/{id}', [App\Http\Controllers\ActivityController::class, 'getActivity']);
     Route::post('/api/activity', [App\Http\Controllers\ActivityController::class, 'createActivity']);
     Route::get('/api/models/activities/{id}', [App\Http\Controllers\TopModelController::class, 'getModelsActivities']);
     Route::post('/api/models/{m_id}/incr/{a_id}', [App\Http\Controllers\TopModelController::class, 'incrModelActivity']);
 
-    
+
     Route::post('/api/episode', [App\Http\Controllers\EpisodeController::class, 'createEpisode']);
     Route::delete('/api/episode/{id}', [App\Http\Controllers\EpisodeController::class, 'deleteEpisode']);
     Route::get('/api/models/episodes/{id}', [App\Http\Controllers\TopModelController::class, 'getModelsEpisodes']);
@@ -61,7 +61,7 @@ Route::middleware(['logged_in'])->group(function () {
     Route::get('/api/episode/{id}', [App\Http\Controllers\EpisodeController::class, 'getEpisode']);
 
 
-    
+
 
     Route::post('/api/lastcall/revoke', [App\Http\Controllers\LastcallController::class, 'revoke']);
     Route::get('/api/lastcall', [App\Http\Controllers\LastcallController::class, 'get']);
@@ -85,7 +85,7 @@ Route::get('/model/{slug}', function ($slug) {
     return view('models.show', compact('model'));
 })->name('model');
 
-Route::get('/models', function () {
+Route::get('/models/list', function () {
     $models = TopModel::all();
     return view('models.index', compact('models'));
 })->name('models');
